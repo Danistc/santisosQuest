@@ -40,10 +40,9 @@
             spaceKey.onDown.add(this.jump, this);
 
             this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);
-
-
+            
             this.score = 0;
-            this.labelScore = game.add.text(20, 20, '0', { font: '30px Arial', fill: '#ffffff' });
+            this.labelScore = game.add.text(20, 20, '0', { fontSize: '32px', fill: 'white', stroke: "black", strokeThickness: 5 });
 
         },
 
@@ -63,13 +62,25 @@
         },
 
         gayTime: function() {
+            // Create santisos nobita heads
             var gayGroup = this.game.add.group();
             for (var i = 0; i < 10; i++) {
-                var homo = this.game.add.sprite(this.game.world.randomX, this.game.world.randomY, 'santisos'); 
+                var homo = this.game.add.sprite(this.game.world.randomX - 20, this.game.world.randomY, 'santisos'); 
                 gayGroup.add(homo);
             }
 
-            game.time.events.add(Phaser.Timer.SECOND * 1, this.restart, this);            
+            // Add gayer Santisos quotes
+            // @todo: Random text quotes
+            txt = game.add.group();
+            timer = game.add.text(
+                30, 
+                game.world.centerY, 
+                '"El hijo de mi cumpleaños"', 
+                { fontSize: '25px', fill: 'white', stroke: "black", strokeThickness: 5}, 
+                txt
+            );
+
+            game.time.events.add(Phaser.Timer.SECOND * 5, this.restart, this);            
         },
         
         // Restart the game
