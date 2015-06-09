@@ -50,22 +50,34 @@
         update: function() {
             // If the gay is out of the world (too high or too low), call the 'restartGame' function
             if (this.gay.inWorld === false) {
-                this.restartGame();
+                this.restart();
             }
 
-            game.physics.arcade.overlap(this.gay, this.pipes, this.restartGame, null, this);
+            game.physics.arcade.overlap(this.gay, this.pipes, this.gayTime, null, this);
         },
+
         // Make the gay jump
         jump: function() {
             // Add a vertical velocity to the gay
             this.gay.body.velocity.y = -350;
         },
 
+        gayTime: function() {
+            var gayGroup = this.game.add.group();
+            for (var i = 0; i < 10; i++) {
+                var homo = this.game.add.sprite(this.game.world.randomX, this.game.world.randomY, 'santisos'); 
+                gayGroup.add(homo);
+            }
+
+            game.time.events.add(Phaser.Timer.SECOND * 1, this.restart, this);            
+        },
+        
         // Restart the game
-        restartGame: function() {
+        restart: function(){
             // Start the 'main' state, which restarts the game
             game.state.start('main');
         },
+
         addOnePipe: function(x, y) {
             // Get the first dead pipe of our group
             var pipe = this.pipes.getFirstDead();
@@ -81,6 +93,7 @@
             pipe.outOfBoundsKill = true;
 
         },
+
         addRowOfPipes: function() {
 
             // Update score
